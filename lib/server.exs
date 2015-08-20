@@ -25,7 +25,6 @@ defmodule Alchemist.Server do
   ```
   $ cd elixir_project
   $ elixir path/to/alchemist-server/run.exs dev
-  Alchemist-Server (0.7.0)
   ```
 
   The Alchemist-Server API is STDIN/STDOUT based, when input sent to a
@@ -109,7 +108,6 @@ defmodule Alchemist.Server do
   alias Alchemist.Case
 
   def start([env]) do
-    IO.puts "Alchemist-Server (#{@version}) - press Ctrl+C to exit"
     loop(all_loaded(), env)
   end
 
