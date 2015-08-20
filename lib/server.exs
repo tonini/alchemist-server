@@ -17,6 +17,16 @@ defmodule Alchemist.Server do
     * Definition lookup of code.
     * Listing of all available Mix tasks.
     * Listing of all available Modules with documentation.
+
+  Usage:
+
+  The server needs to be started inside an Elixir mix project like below:
+
+  ```
+  $ cd elixir_project
+  $ elixir path/to/alchemist-server/run.exs dev
+  Alchemist-Server (0.7.0)
+  ```
   """
 
   alias Alchemist.Case
