@@ -32,6 +32,7 @@ defmodule Alchemist.Server do
   alias Alchemist.Case
 
   def start([env]) do
+    IO.puts "Alchemist-Server (#{@version}) - press Ctrl+C to exit"
     loop(all_loaded(), env)
   end
 
