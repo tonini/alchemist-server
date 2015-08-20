@@ -1,6 +1,7 @@
 Code.require_file "documentation.exs", __DIR__
 
 defmodule Alchemist.Case do
+  @moduledoc false
 
   alias Alchemist.Completer
   alias Alchemist.Informant
