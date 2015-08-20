@@ -42,21 +42,21 @@ defmodule Alchemist.Server do
   def read_input(line) do
     case line |> String.split(" ", parts: 2) do
       ["COMPLETE"] ->
-        Case.Complete.process!
+        Case.Complete.process
       ["COMPLETE", request] ->
-        Case.Complete.process!(request)
+        Case.Complete.process(request)
       ["DOC", request] ->
-        Case.Doc.process!(request)
+        Case.Doc.process(request)
       ["MODULES"] ->
-        Case.Modules.process!
+        Case.Modules.process
       ["EVAL", file] ->
-        Case.Eval.process!(file)
+        Case.Eval.process(file)
       ["QUOTE", file] ->
-        Case.Quote.process!(file)
+        Case.Quote.process(file)
       ["SOURCE", request] ->
-        Case.Find.process!(request)
+        Case.Find.process(request)
       ["MIXTASKS"] ->
-        Case.MixTask.process!
+        Case.MixTask.process
       _ ->
         nil
     end
