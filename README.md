@@ -15,17 +15,22 @@ Elixir Mix project and serves with informations as the following:
 
 # Usage
 
+```sh
+$ cd elixir_project
+$ elixir path/to/alchemist-server/run.exs
+```
+
 # API
 
 ## Completion
 
-## Documentation
+## Documentation lookup
 
-## Eval
+## Evaluation
 
-## Quote
+## Quoted
 
-## SOURCE
+## Definition lookup
 
 ## Mixtasks
 
