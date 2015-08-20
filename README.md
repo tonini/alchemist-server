@@ -2,3 +2,31 @@
 [![Build Status](https://img.shields.io/travis/tonini/alchemist-server.svg)](https://travis-ci.org/tonini/alchemist-server)
 
 # Alchemist Server
+
+The Alchemist-Server operates as an informant for a specific desired
+Elixir Mix project and serves with informations as the following:
+
+* Completion for Modules and functions.
+* Documentation lookup for Modules and functions.
+* Code evaluation and quoted representation of code.
+* Definition lookup of code.
+* Listing of all available Mix tasks.
+* Listing of all available Modules with documentation.
+
+# Usage
+
+# API
+
+## Completion
+
+## Documentation
+
+## Eval
+
+## Quote
+
+## SOURCE
+
+## Mixtasks
+
+## Modules

@@ -7,6 +7,18 @@ defmodule Alchemist.Server do
 
   @version "0.7.0"
 
+  @moduledoc """
+  The Alchemist-Server operates as an informant for a specific desired
+  Elixir Mix project and serves with informations as the following:
+
+    * Completion for Modules and functions.
+    * Documentation lookup for Modules and functions.
+    * Code evaluation and quoted representation of code.
+    * Definition lookup of code.
+    * Listing of all available Mix tasks.
+    * Listing of all available Modules with documentation.
+  """
+
   alias Alchemist.Case
 
   def start([env]) do
