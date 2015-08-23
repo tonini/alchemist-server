@@ -42,9 +42,11 @@ defmodule Alchemist.Source do
   defp source(module), do: do_source(module)
 
   defp do_source(module) do
-    case module.module_info(:compile)[:source] do
-      nil    -> nil
-      source -> List.to_string(source)
+    if Code.ensure_loaded? module do
+      case module.module_info(:compile)[:source] do
+        nil    -> nil
+        source -> List.to_string(source)
+      end
     end
   end
 

@@ -35,4 +35,10 @@ defmodule SourceTest do
     context = [ context: Elixir, imports: [], aliases: [] ]
     assert find([:lists, :duplicate, context]) =~ "lib/stdlib/src/lists.erl"
   end
+
+  test "find call for none existing module" do
+    context = [ context: Elixir, imports: [], aliases: [] ]
+    assert find([Rock, :duplicate, context]) == nil
+  end
+
 end
