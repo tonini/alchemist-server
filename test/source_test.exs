@@ -30,4 +30,9 @@ defmodule SourceTest do
     context = [context: Elixir, imports: [], aliases: []]
     assert find([String, nil, context]) =~ "lib/elixir/lib/string.ex"
   end
+
+  test "find call for erlang module" do
+    context = [ context: Elixir, imports: [], aliases: [] ]
+    assert find([:lists, :duplicate, context]) =~ "lib/stdlib/src/lists.erl"
+  end
 end

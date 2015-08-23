@@ -18,10 +18,10 @@ defmodule Alchemist.Source do
   end
 
   def find([module, _function, [context: _, imports: _, aliases: aliases]]) do
-    module = module
-    |> Module.split
-    |> expand_alias(aliases)
-    source(module)
+    case module |> Module.split do
+      [] -> module
+      module -> expand_alias(module, aliases)
+    end |> source
   end
 
   defp look_for_kernel_functions(function) do
