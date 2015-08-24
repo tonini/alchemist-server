@@ -1,7 +1,7 @@
 [![License GPL 3](https://img.shields.io/badge/license-GPL_3-green.svg)](http://www.gnu.org/licenses/gpl-3.0.txt)
 [![Build Status](https://img.shields.io/travis/tonini/alchemist-server.svg)](https://travis-ci.org/tonini/alchemist-server)
 
-**INFO:** The Alchemist-Server is in Beta status and feedback and critic are highly appreciated.
+**INFO:** The Alchemist-Server is in Beta status and the API will most likey change until the first release. Feedback and critic are highly appreciated though.
 
 # Alchemist Server
 
