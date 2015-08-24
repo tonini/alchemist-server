@@ -12,6 +12,7 @@ test:	test_server
 	${MAKE} test_doc
 	${MAKE} test_informant
 	${MAKE} test_source
+	${MAKE} test_completer
 
 test_server:
 	@ echo "\n$(INFO_COLOR)Run server tests: $(NO_COLOR)\n"
@@ -29,4 +30,9 @@ test_source:
 	@ echo "\n$(INFO_COLOR)Run source tests: $(NO_COLOR)\n"
 	$(ELIXIR) test/source_test.exs
 
-.PHONY: test test_server test_doc test_informant test_source
+test_completer:
+	@ echo "\n$(INFO_COLOR)Run completer tests: $(NO_COLOR)\n"
+	$(ELIXIR) test/completer_test.exs
+
+
+.PHONY: test test_server test_doc test_informant test_source test_completer
