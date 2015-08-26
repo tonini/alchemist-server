@@ -1,49 +1,12 @@
 Code.require_file "documentation.exs", __DIR__
+Code.require_file "autocomplete.exs", __DIR__
 
 defmodule Alchemist.Case do
   @moduledoc false
 
-  alias Alchemist.Completer
+  alias Alchemist.Autocomplete
   alias Alchemist.Informant
   alias Alchemist.Documentation
-
-  defmodule Complete do
-    def process do
-      Completer.run('') |> print
-    end
-
-    def process(request) when is_binary(request) do
-      request
-      |> normalize
-      |> process
-    end
-
-    def process({expr,
-                  [ context: _context,
-                    imports: imports,
-                    aliases: aliases ]}) do
-      Application.put_env(:"alchemist.el", :aliases, aliases)
-
-      funcs = for module <- imports do
-        Informant.get_functions(module, expr)
-      end |> List.flatten
-      candidates = Completer.run(expr)
-
-      print(funcs ++ candidates)
-    end
-
-    def normalize(request) do
-      {{expr, context_info}, _} = Code.eval_string(request)
-      {expr, context_info}
-    end
-
-    def print(result) do
-      result
-      |> Enum.uniq
-      |> Enum.map &IO.puts/1
-      IO.puts "END-OF-COMPLETE"
-    end
-  end
 
   defmodule Modules do
     def process do
@@ -52,7 +15,7 @@ defmodule Alchemist.Case do
       |> Enum.reject(&is_nil/1)
       |> Enum.filter(&Documentation.moduledoc?/1)
 
-      functions = Completer.run('')
+      functions = Autocomplete.run('')
       print(modules ++ functions)
     end
 
@@ -61,28 +24,6 @@ defmodule Alchemist.Case do
       |> Enum.uniq
       |> Enum.map &IO.puts/1
       IO.puts "END-OF-MODULES"
-    end
-  end
-
-  defmodule Doc do
-    def process(request) when is_binary(request) do
-      request
-      |> normalize
-      |> process
-    end
-
-    def process([expr, modules, aliases]) do
-      Documentation.search(expr, modules, aliases)
-      print
-    end
-
-    def normalize(request) do
-      {{expr, [context: _, imports: imports, aliases: aliases]}, _} = Code.eval_string(request)
-      [expr, imports, aliases]
-    end
-
-    def print do
-      IO.puts "END-OF-DOC"
     end
   end
 
@@ -113,25 +54,6 @@ defmodule Alchemist.Case do
         e -> IO.inspect e
       end
       IO.puts "END-OF-QUOTE"
-    end
-  end
-
-  defmodule Find do
-    def process(request) do
-      request
-      |> normalize
-      |> Alchemist.Source.find
-      |> IO.puts
-
-      IO.puts "END-OF-SOURCE"
-    end
-
-    def normalize(request) do
-      {{expr, context_info}, _} = Code.eval_string(request)
-      [module, function] = String.split(expr, ",", parts: 2)
-      {module, _} = Code.eval_string(module)
-      function = String.to_atom function
-      [module, function, context_info]
     end
   end
 

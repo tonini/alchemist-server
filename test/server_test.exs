@@ -16,41 +16,20 @@ defmodule ServerTest do
     end
   end
 
-  test "Documentation lookup" do
-    assert send_signal("DOC {\"List\", [context: Elixir, imports: [], aliases: []]}") =~ """
-    Implements functions that only make sense for lists and cannot be part of the
-    Enum protocol. In general, favor using the Enum API instead of List.
-    """
-  end
-
-  test "Empty expression completion" do
-    assert send_signal("COMPLETE") =~ """
-    get_and_update_in/2
-    get_and_update_in/3
-    put_in/2
-    put_in/3
-    reraise/2
-    reraise/3
-    """
-  end
-
   test "Expression completion" do
-    assert send_signal("COMPLETE {\"def\", [context: Elixir, imports: [], aliases: []]}") =~ """
-    def
-    defexception/1
+    assert send_signal("COMP { 'def', [context: Elixir, imports: [], aliases: []]}") =~ """
     defoverridable/1
-    defstruct/1
-    def/2
-    defdelegate/2
-    defmacro/2
-    defmacrop/2
-    defmodule/2
-    defp/2
+    """
+  end
+
+  test "Documentation lookup" do
+    assert send_signal("DOCL { 'List', [context: Elixir, imports: [], aliases: []]}") =~ """
+    Implements functions that only make sense for lists and cannot be part of the
     """
   end
 
   test "Getting the definition source file information of code" do
-    assert send_signal("SOURCE {\"List,delete\", [context: Elixir, imports: [], aliases: []]}") =~ "/lib/elixir/lib/list.ex"
+    assert send_signal("DEFL {\"List,delete\", [context: Elixir, imports: [], aliases: []]}") =~ "/lib/elixir/lib/list.ex"
   end
 
   test "Evaluate the content of a file" do

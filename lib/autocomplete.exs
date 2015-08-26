@@ -1,4 +1,8 @@
-defmodule Alchemist.Completer do
+Code.require_file "informant.exs", __DIR__
+
+defmodule Alchemist.Autocomplete do
+
+  alias Alchemist.Informant
 
   @moduledoc """
   This Alchemist.Completer holds a codebase copy of the
@@ -24,6 +28,12 @@ defmodule Alchemist.Completer do
       { :yes, [], _ } -> List.insert_at(list, 0, exp)
       { :yes, _,  _ } -> run(code ++ result)
     end
+  end
+
+  def run(hint, modules) do
+    for module <- modules do
+      Informant.get_functions(module, hint)
+    end |> List.flatten
   end
 
   def expand('') do

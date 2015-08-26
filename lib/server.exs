@@ -1,4 +1,9 @@
-Code.require_file "completer.exs", __DIR__
+Code.require_file "api/comp.exs", __DIR__
+Code.require_file "api/docl.exs", __DIR__
+Code.require_file "api/defl.exs", __DIR__
+# Code.require_file "api/eval.exs", __DIR__
+# Code.require_file "api/info.exs", __DIR__
+
 Code.require_file "informant.exs", __DIR__
 Code.require_file "source.exs", __DIR__
 Code.require_file "case.exs", __DIR__
@@ -19,6 +24,7 @@ defmodule Alchemist.Server do
     * Listing of all available Modules with documentation.
   """
 
+  alias Alchemist.API
   alias Alchemist.Case
 
   def start([env]) do
@@ -41,20 +47,18 @@ defmodule Alchemist.Server do
 
   def read_input(line) do
     case line |> String.split(" ", parts: 2) do
-      ["COMPLETE"] ->
-        Case.Complete.process
-      ["COMPLETE", request] ->
-        Case.Complete.process(request)
-      ["DOC", request] ->
-        Case.Doc.process(request)
+      ["COMP", request] ->
+        API.Comp.process(request)
+      ["DOCL", request] ->
+        API.Docl.process(request)
       ["MODULES"] ->
         Case.Modules.process
       ["EVAL", file] ->
         Case.Eval.process(file)
       ["QUOTE", file] ->
         Case.Quote.process(file)
-      ["SOURCE", request] ->
-        Case.Find.process(request)
+      ["DEFL", request] ->
+        API.Defl.process(request)
       ["MIXTASKS"] ->
         Case.MixTask.process
       _ ->

@@ -32,7 +32,11 @@ test_source:
 
 test_completer:
 	@ echo "\n$(INFO_COLOR)Run completer tests: $(NO_COLOR)\n"
-	$(ELIXIR) test/completer_test.exs
+	$(ELIXIR) test/autocomplete_test.exs
+
+api_completer:
+	@ echo "\n$(INFO_COLOR)Run api tests: $(NO_COLOR)\n"
+	$(ELIXIR) test/api_test.exs
 
 
 .PHONY: test test_server test_doc test_informant test_source test_completer

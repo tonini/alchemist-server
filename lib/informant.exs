@@ -2,8 +2,9 @@ defmodule Alchemist.Informant do
   @moduledoc false
 
   def get_functions(module, hint) do
+    hint        = to_string hint
     {module, _} = Code.eval_string(module)
-    functions = get_module_funs(module)
+    functions   = get_module_funs(module)
 
     list = Enum.reduce functions, [], fn({f, a}, acc) ->
       case :lists.keyfind(f, 1, acc) do

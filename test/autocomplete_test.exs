@@ -1,10 +1,10 @@
 Code.require_file "test_helper.exs", __DIR__
-Code.require_file "../lib/completer.exs", __DIR__
+Code.require_file "../lib/autocomplete.exs", __DIR__
 
-defmodule CompleterTest do
+defmodule AutocompleteTest do
   use ExUnit.Case, async: true
 
-  import Alchemist.Completer
+  import Alchemist.Autocomplete
 
   test "return completion candidates for 'List'" do
     assert run('List') == ['List.', 'Chars', 'first/1', 'last/1', 'to_atom/1',
@@ -28,5 +28,10 @@ defmodule CompleterTest do
     Application.put_env(:"alchemist.el", :aliases, [{MyList, List}])
 
     assert run('MyList.del') == ['MyList.delete', 'delete/2', 'delete_at/2']
+  end
+
+  test "return completion candidates for functions from import" do
+    imports = [Mix.Generator]
+    assert run('create_file', imports) == ["create_file/2"]
   end
 end

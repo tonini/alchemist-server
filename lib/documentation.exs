@@ -17,6 +17,7 @@ defmodule Alchemist.Documentation do
   end
 
   def search(expr, modules, []) do
+    expr = to_string expr
     unless function?(expr) do
       search(expr)
     else
