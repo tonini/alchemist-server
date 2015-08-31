@@ -35,7 +35,7 @@ Example for a completion request:
 ```
 [type]   [arguments]
 
-COMPLETE { "def" [ context: Elixir, imports: [Enum], aliases: [{MyList, List}] ] }
+COMPLETE { "def", [ context: Elixir, imports: [Enum], aliases: [{MyList, List}] ] }
 ```
 
 # API
@@ -46,8 +46,8 @@ Return a completion list of all the available candidates.
 
 ```
 COMPLETE
-COMPLETE { "def" [ context: Elixir, imports: [], aliases: [] ] }
-COMPLETE { "List.fla" [ context: Elixir, imports: [], aliases: [] ] }
+COMPLETE { "def", [ context: Elixir, imports: [], aliases: [] ] }
+COMPLETE { "List.fla", [ context: Elixir, imports: [], aliases: [] ] }
 ```
 
 ## Documentation lookup
@@ -55,8 +55,8 @@ COMPLETE { "List.fla" [ context: Elixir, imports: [], aliases: [] ] }
 Return the documentation.
 
 ```
-DOC { "defmodule" [ context: Elixir, imports: [], aliases: [] ] }
-DOC { "List.flatten/1" [ context: Elixir, imports: [], aliases: [] ] }
+DOC { "defmodule", [ context: Elixir, imports: [], aliases: [] ] }
+DOC { "List.flatten/1", [ context: Elixir, imports: [], aliases: [] ] }
 ```
 
 ## Evaluation
