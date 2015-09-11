@@ -15,4 +15,9 @@ defmodule InformantTest do
     assert has_function?(List, :split) == false
     assert has_function?(List, :map) == false
   end
+
+  test "has_application?" do
+    assert has_application?(:elixir)
+    refute has_application?(:foobarbaz)
+  end
 end

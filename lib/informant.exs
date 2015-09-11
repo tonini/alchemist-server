@@ -67,4 +67,7 @@ defmodule Alchemist.Informant do
     :ets.match(:ac_tab, {{:loaded, :"$1"}, :_})
   end
 
+  def has_application?(name) do
+    :ets.member(:ac_tab, {:loaded, name})
+  end
 end
