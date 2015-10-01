@@ -1,8 +1,8 @@
-Code.require_file "informant.exs", __DIR__
+Code.require_file "module_info.exs", __DIR__
 
-defmodule Alchemist.Autocomplete do
+defmodule Alchemist.Helpers.Complete do
 
-  alias Alchemist.Informant
+  alias Alchemist.Helpers.ModuleInfo
 
   @moduledoc """
   This Alchemist.Completer holds a codebase copy of the
@@ -32,7 +32,7 @@ defmodule Alchemist.Autocomplete do
 
   def run(hint, modules) do
     for module <- modules do
-      Informant.get_functions(module, hint)
+      ModuleInfo.get_functions(module, hint)
     end |> List.flatten
   end
 

@@ -1,10 +1,10 @@
-Code.require_file "test_helper.exs", __DIR__
-Code.require_file "../lib/autocomplete.exs", __DIR__
+Code.require_file "../test_helper.exs", __DIR__
+Code.require_file "../../lib/helpers/complete.exs", __DIR__
 
-defmodule AutocompleteTest do
+defmodule CompleteTest do
   use ExUnit.Case, async: true
 
-  import Alchemist.Autocomplete
+  import Alchemist.Helpers.Complete
 
   test "return completion candidates for 'List'" do
     assert run('List') == ['List.', 'Chars', 'first/1', 'last/1', 'to_atom/1',
@@ -12,8 +12,8 @@ defmodule AutocompleteTest do
                            'wrap/1', 'zip/1', 'delete/2', 'delete_at/2', 'duplicate/2',
                            'keysort/2', 'flatten/1', 'flatten/2', 'to_integer/1',
                            'to_integer/2', 'foldl/3', 'foldr/3', 'insert_at/3', 'keydelete/3',
-                           'keymember?/3', 'replace_at/3', 'update_at/3', 'keyfind/4',
-                           'keyreplace/4', 'keystore/4']
+                           'keymember?/3', 'keytake/3', 'replace_at/3', 'update_at/3',
+                           'keyfind/4', 'keyreplace/4', 'keystore/4']
   end
 
   test "return completion candidates for 'Str'" do
@@ -32,6 +32,6 @@ defmodule AutocompleteTest do
 
   test "return completion candidates for functions from import" do
     imports = [Mix.Generator]
-    assert run('create_file', imports) == ["create_file/2"]
+    assert run('create_file', imports) == ["create_file/3"]
   end
 end

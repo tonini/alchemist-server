@@ -1,16 +1,12 @@
 Code.require_file "api/comp.exs", __DIR__
 Code.require_file "api/docl.exs", __DIR__
 Code.require_file "api/defl.exs", __DIR__
-# Code.require_file "api/eval.exs", __DIR__
-# Code.require_file "api/info.exs", __DIR__
-
-Code.require_file "informant.exs", __DIR__
-Code.require_file "source.exs", __DIR__
-Code.require_file "case.exs", __DIR__
+Code.require_file "api/eval.exs", __DIR__
+Code.require_file "api/info.exs", __DIR__
 
 defmodule Alchemist.Server do
 
-  @version "0.7.0"
+  @version "0.1.0-alpha"
 
   @moduledoc """
   The Alchemist-Server operates as an informant for a specific desired
@@ -25,7 +21,6 @@ defmodule Alchemist.Server do
   """
 
   alias Alchemist.API
-  alias Alchemist.Case
 
   def start([env]) do
     loop(all_loaded(), env)
@@ -47,20 +42,16 @@ defmodule Alchemist.Server do
 
   def read_input(line) do
     case line |> String.split(" ", parts: 2) do
-      ["COMP", request] ->
-        API.Comp.process(request)
-      ["DOCL", request] ->
-        API.Docl.process(request)
-      ["MODULES"] ->
-        Case.Modules.process
-      ["EVAL", file] ->
-        Case.Eval.process(file)
-      ["QUOTE", file] ->
-        Case.Quote.process(file)
-      ["DEFL", request] ->
-        API.Defl.process(request)
-      ["MIXTASKS"] ->
-        Case.MixTask.process
+      ["COMP", args] ->
+        API.Comp.request(args)
+      ["DOCL", args] ->
+        API.Docl.request(args)
+      ["INFO", args] ->
+        API.Info.request(args)
+      ["EVAL", args] ->
+        API.Eval.request(args)
+      ["DEFL", args] ->
+        API.Defl.request(args)
       _ ->
         nil
     end

@@ -35,19 +35,31 @@ defmodule ServerTest do
   test "Evaluate the content of a file" do
     filename = Path.expand("fixtures/eval_fixture.exs", __DIR__)
     File.write(filename, "1+1")
-    assert send_signal("EVAL #{filename}") =~ "2"
+    assert send_signal("EVAL { :eval, '#{filename}' }") =~ "2"
   end
 
   test "Evaluate and quote the content of a file" do
     filename = Path.expand("fixtures/eval_and_quote_fixture.exs", __DIR__)
     File.write(filename, "[4,2,1,3] |> Enum.sort")
-    assert send_signal("QUOTE #{filename}") =~ """
+    assert send_signal("EVAL { :quote, '#{filename}' }") =~ """
     {{:., [line: 1], [{:__aliases__, [counter: 0, line: 1], [:Enum]}, :sort]},\n   [line: 1], []}]}
     """
   end
 
-  test "Get all mix tasks by name" do
-    assert send_signal("MIXTASKS") =~ """
+  test "Get all available application modules" do
+    assert send_signal("INFO { :type, :modules }") =~ """
+    Elixir.Logger
+    Elixir.Logger.Formatter
+    Elixir.Logger.Translator
+    Elixir.ExUnit
+    Elixir.ExUnit.Assertions
+    Elixir.ExUnit.Callbacks
+    Elixir.ExUnit.CaptureIO
+    """
+  end
+
+  test "Get all available mix tasks by name" do
+    assert send_signal("INFO { :type, :mixtasks }") =~ """
     app.start
     archive
     archive.build
