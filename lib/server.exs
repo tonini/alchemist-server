@@ -6,7 +6,7 @@ Code.require_file "api/info.exs", __DIR__
 
 defmodule Alchemist.Server do
 
-  @version "0.1.0-alpha"
+  @version "0.1.0-beta"
 
   @moduledoc """
   The Alchemist-Server operates as an informant for a specific desired
