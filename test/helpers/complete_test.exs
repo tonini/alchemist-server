@@ -6,6 +6,10 @@ defmodule CompleteTest do
 
   import Alchemist.Helpers.Complete
 
+  defmodule MyModule do
+    def say_hi, do: true
+  end
+
   test "return completion candidates for 'List'" do
     assert run('List') == ['List.', 'Chars', 'first/1', 'last/1', 'to_atom/1',
                            'to_existing_atom/1', 'to_float/1', 'to_string/1', 'to_tuple/1',
@@ -31,7 +35,7 @@ defmodule CompleteTest do
   end
 
   test "return completion candidates for functions from import" do
-    imports = [Mix.Generator]
-    assert run('create_file', imports) == ["create_file/3"]
+    imports = [MyModule]
+    assert run('say', imports) == ["say_hi/0"]
   end
 end

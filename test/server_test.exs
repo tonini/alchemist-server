@@ -51,10 +51,6 @@ defmodule ServerTest do
     Elixir.Logger
     Elixir.Logger.Formatter
     Elixir.Logger.Translator
-    Elixir.ExUnit
-    Elixir.ExUnit.Assertions
-    Elixir.ExUnit.Callbacks
-    Elixir.ExUnit.CaptureIO
     """
   end
 
