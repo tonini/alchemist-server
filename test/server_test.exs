@@ -25,6 +25,7 @@ defmodule ServerTest do
   test "Documentation lookup" do
     assert send_signal("DOCL { 'List', [context: Elixir, imports: [], aliases: []]}") =~ """
     Erlang's standard library\nbut follow Elixir's convention of receiving the target (in this case, a list)\nas the first argument.\n\e[0m\nEND-OF-DOCL
+    Specialized functions that only work on lists.
     """
   end
 
