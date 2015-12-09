@@ -119,6 +119,14 @@ Return a list of all available modules which has documentation.
 INFO { :type, :modules }
 ```
 
+### Datatype Information
+
+Return information about any datatype
+
+```
+INFO { :type, :info, List }
+```
+
 ## End Markers
 
 Each request type ends with a specific end marker tag to notify that the request is done.

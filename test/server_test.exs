@@ -24,7 +24,6 @@ defmodule ServerTest do
 
   test "Documentation lookup" do
     assert send_signal("DOCL { 'List', [context: Elixir, imports: [], aliases: []]}") =~ """
-    Erlang's standard library\nbut follow Elixir's convention of receiving the target (in this case, a list)\nas the first argument.\n\e[0m\nEND-OF-DOCL
     Specialized functions that only work on lists.
     """
   end
@@ -90,6 +89,18 @@ defmodule ServerTest do
     clean
     cmd
     compile
+    """
+  end
+
+  test "Get information from data type" do
+    assert send_signal("INFO { :type, :info, List}") =~ """
+    Reference modules\e[0m\n\e[22m  Module, Atom\e[0m\nEND-OF-INFO
+    """
+  end
+
+  test "Don't crash server if data type argument is faulty" do
+    assert send_signal("INFO { :type, :info, whatever}") =~ """
+    END-OF-INFO
     """
   end
 

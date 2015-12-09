@@ -5,6 +5,8 @@ defmodule Alchemist.API.Info do
 
   @moduledoc false
 
+  import IEx.Helpers, warn: false
+
   alias Alchemist.Helpers.ModuleInfo
   alias Alchemist.Helpers.Complete
 
@@ -42,8 +44,29 @@ defmodule Alchemist.API.Info do
     IO.puts "END-OF-INFO"
   end
 
+  def process({:info, arg}) do
+    try do
+      i(arg)
+    rescue
+      _e -> nil
+    end
+
+    IO.puts "END-OF-INFO"
+  end
+
+  def process(nil) do
+    IO.puts "END-OF-INFO"
+  end
+
   def normalize(request) do
-    {{_, name }, _} = Code.eval_string(request)
-    name
+    try do
+      arguments = Code.eval_string(request)
+      case arguments do
+        {{_, type }, _}     -> type
+        {{_, type, arg}, _} -> {type, arg}
+      end
+    rescue
+      _e -> nil
+    end
   end
 end
