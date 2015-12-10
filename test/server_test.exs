@@ -24,7 +24,7 @@ defmodule ServerTest do
 
   test "Documentation lookup" do
     assert send_signal("DOCL { 'List', [context: Elixir, imports: [], aliases: []]}") =~ """
-    Specialized functions that only work on lists.
+    \e[0m\n\e[7m\e[33m                                      List                                      \e[0m\n\e[0m
     """
   end
 
