@@ -54,6 +54,16 @@ defmodule Alchemist.API.Info do
     IO.puts "END-OF-INFO"
   end
 
+  def process({:types, arg}) do
+    try do
+      Code.eval_string("t(#{arg})", [], __ENV__)
+    rescue
+      _e -> nil
+    end
+
+    IO.puts "END-OF-INFO"
+  end
+
   def process(nil) do
     IO.puts "END-OF-INFO"
   end

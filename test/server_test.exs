@@ -104,6 +104,16 @@ defmodule ServerTest do
     """
   end
 
+  test "Prints the types for the given module or for the given function/arity pair" do
+    assert send_signal("INFO { :type, :types, 'Agent'}") =~ """
+    @type agent() :: pid() | {atom(), node()} | name()\e[0m\n\e[22m@type state() :: term()\e[0m\nEND-OF-INFO
+    """
+
+    assert send_signal("INFO { :type, :types, 'Agent.on_start/0'}") =~ """
+    @type on_start() :: {:ok, pid()} | {:error, {:already_started, pid()} | term()}\e[0m
+    """
+  end
+
   defp send_signal(signal) do
     capture_io(fn ->
       Alchemist.Server.read_input(signal)
