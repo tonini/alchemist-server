@@ -75,7 +75,7 @@ defmodule Alchemist.API.Info do
         {{_, type }, _}     -> type
         {{_, type, arg}, _} ->
           IO.puts System.version
-          if Version.match?(System.version, ">=1.2.0-rc.0") do
+          if Version.match?(System.version, ">=1.2.0-rc") do
             {type, arg}
           else
             nil
