@@ -3,6 +3,7 @@ Code.require_file "api/docl.exs", __DIR__
 Code.require_file "api/defl.exs", __DIR__
 Code.require_file "api/eval.exs", __DIR__
 Code.require_file "api/info.exs", __DIR__
+Code.require_file "server/io.exs", __DIR__
 
 defmodule Alchemist.Server do
 
@@ -21,17 +22,18 @@ defmodule Alchemist.Server do
   """
 
   alias Alchemist.API
+  alias Alchemist.Server.IO, as: ServerIO
 
   def start([env]) do
     loop(all_loaded(), env)
   end
 
   def loop(loaded, env) do
-    line  = IO.gets("") |> String.rstrip()
+    line  = ServerIO.gets
     paths = load_paths(env)
     apps  = load_apps(env)
 
-    read_input(line)
+    read_input(line, ServerIO)
 
     purge_modules(loaded)
     purge_paths(paths)
@@ -40,18 +42,18 @@ defmodule Alchemist.Server do
     loop(loaded, env)
   end
 
-  def read_input(line) do
+  def read_input(line, io_module) do
     case line |> String.split(" ", parts: 2) do
       ["COMP", args] ->
-        API.Comp.request(args)
+        API.Comp.request(args, io_module)
       ["DOCL", args] ->
-        API.Docl.request(args)
+        API.Docl.request(args, io_module)
       ["INFO", args] ->
-        API.Info.request(args)
+        API.Info.request(args, io_module)
       ["EVAL", args] ->
-        API.Eval.request(args)
+        API.Eval.request(args, io_module)
       ["DEFL", args] ->
-        API.Defl.request(args)
+        API.Defl.request(args, io_module)
       _ ->
         nil
     end

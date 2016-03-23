@@ -2,55 +2,55 @@ defmodule Alchemist.API.Eval do
 
   @moduledoc false
 
-  def request(args) do
+  def request(args, io_module) do
     args
     |> normalize
-    |> process
+    |> process(io_module)
 
-    IO.puts "END-OF-EVAL"
+    io_module.puts "END-OF-EVAL"
   end
 
-  def process({:eval, file}) do
+  def process({:eval, file}, io_module) do
     try do
       File.read!("#{file}")
       |> Code.eval_string
       |> Tuple.to_list
       |> List.first
-      |> IO.inspect
+      |> io_module.inspect
     rescue
-      e -> IO.inspect e
+      e -> io_module.inspect e
     end
   end
 
-  def process({:quote, file}) do
+  def process({:quote, file}, io_module) do
     try do
       File.read!("#{file}")
       |> Code.string_to_quoted
       |> Tuple.to_list
       |> List.last
-      |> IO.inspect
+      |> io_module.inspect
     rescue
-      e -> IO.inspect e
+      e -> io_module.inspect e
     end
   end
 
-  def process({:expand, file}) do
+  def process({:expand, file}, io_module) do
     try do
       {_, expr} = File.read!("#{file}")
       |> Code.string_to_quoted
       res = Macro.expand(expr, __ENV__)
-      IO.puts Macro.to_string(res)
+      io_module.puts Macro.to_string(res)
     rescue
-      e -> IO.inspect e
+      e -> io_module.inspect e
     end
   end
 
-  def process({:expand_once, file}) do
+  def process({:expand_once, file}, io_module) do
     try do
       {_, expr} = File.read!("#{file}")
       |> Code.string_to_quoted
       res = Macro.expand_once(expr, __ENV__)
-      IO.puts Macro.to_string(res)
+      io_module.puts Macro.to_string(res)
     rescue
       e -> IO.inspect e
     end

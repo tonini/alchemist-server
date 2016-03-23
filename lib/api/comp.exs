@@ -6,22 +6,22 @@ defmodule Alchemist.API.Comp do
 
   alias Alchemist.Helpers.Complete
 
-  def request(args) do
+  def request(args, io_module) do
     args
     |> normalize
-    |> process
+    |> process(io_module)
   end
 
-  def process([nil, _, imports, _]) do
+  def process([nil, _, imports, _], io_module) do
     Complete.run('', imports) ++ Complete.run('')
-    |> print
+    |> print(io_module)
   end
 
-  def process([hint, _context, imports, aliases]) do
+  def process([hint, _context, imports, aliases], io_module) do
     Application.put_env(:"alchemist.el", :aliases, aliases)
 
     Complete.run(hint, imports) ++ Complete.run(hint)
-    |> print
+    |> print(io_module)
   end
 
   defp normalize(request) do
@@ -31,11 +31,11 @@ defmodule Alchemist.API.Comp do
     [hint, context, imports, aliases]
   end
 
-  defp print(result) do
+  defp print(result, io_module) do
     result
     |> Enum.uniq
-    |> Enum.map(&IO.puts/1)
+    |> Enum.map(&io_module.puts/1)
 
-    IO.puts "END-OF-COMP"
+    io_module.puts "END-OF-COMP"
   end
 end

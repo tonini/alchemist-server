@@ -10,13 +10,13 @@ defmodule Alchemist.API.Info do
   alias Alchemist.Helpers.ModuleInfo
   alias Alchemist.Helpers.Complete
 
-  def request(args) do
+  def request(args, io_module) do
     args
     |> normalize
-    |> process
+    |> process(io_module)
   end
 
-  def process(:modules) do
+  def process(:modules, io_module) do
     modules = ModuleInfo.all_applications_modules
     |> Enum.uniq
     |> Enum.reject(&is_nil/1)
@@ -26,12 +26,12 @@ defmodule Alchemist.API.Info do
 
     modules ++ functions
     |> Enum.uniq
-    |> Enum.map(&IO.puts/1)
+    |> Enum.map(&io_module.puts/1)
 
-    IO.puts "END-OF-INFO"
+    io_module.puts "END-OF-INFO"
   end
 
-  def process(:mixtasks) do
+  def process(:mixtasks, io_module) do
     # append things like hex or phoenix archives to the load_path
     Mix.Local.append_archives
 
@@ -39,33 +39,33 @@ defmodule Alchemist.API.Info do
     |> Mix.Task.load_tasks
     |> Enum.map(&Mix.Task.task_name/1)
     |> Enum.sort
-    |> Enum.map(&IO.puts/1)
+    |> Enum.map(&io_module.puts/1)
 
-    IO.puts "END-OF-INFO"
+    io_module.puts "END-OF-INFO"
   end
 
-  def process({:info, arg}) do
+  def process({:info, arg}, io_module) do
     try do
       Code.eval_string("i(#{arg})", [], __ENV__)
     rescue
       _e -> nil
     end
 
-    IO.puts "END-OF-INFO"
+    io_module.puts "END-OF-INFO"
   end
 
-  def process({:types, arg}) do
+  def process({:types, arg}, io_module) do
     try do
       Code.eval_string("t(#{arg})", [], __ENV__)
     rescue
       _e -> nil
     end
 
-    IO.puts "END-OF-INFO"
+    io_module.puts "END-OF-INFO"
   end
 
-  def process(nil) do
-    IO.puts "END-OF-INFO"
+  def process(nil, io_module) do
+   io_module.puts "END-OF-INFO"
   end
 
   def normalize(request) do

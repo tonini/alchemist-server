@@ -6,13 +6,13 @@ defmodule Alchemist.API.Defl do
 
   alias Alchemist.Helpers.ModuleInfo
 
-  def request(args) do
+  def request(args, io_module) do
     args
     |> normalize
     |> process
-    |> IO.puts
+    |> io_module.puts
 
-    IO.puts "END-OF-DEFL"
+    io_module.puts "END-OF-DEFL"
   end
 
   def process([nil, function, [context: _, imports: [], aliases: _]]) do
