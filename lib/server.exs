@@ -3,6 +3,7 @@ Code.require_file "api/docl.exs", __DIR__
 Code.require_file "api/defl.exs", __DIR__
 Code.require_file "api/eval.exs", __DIR__
 Code.require_file "api/info.exs", __DIR__
+Code.require_file "api/ping.exs", __DIR__
 
 defmodule Alchemist.Server do
 
@@ -52,6 +53,8 @@ defmodule Alchemist.Server do
         API.Eval.request(args)
       ["DEFL", args] ->
         API.Defl.request(args)
+      ["PING"] ->
+        API.Ping.request()
       _ ->
         nil
     end
