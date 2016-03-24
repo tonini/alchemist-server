@@ -34,7 +34,7 @@ defmodule Alchemist.Server do
     paths = load_paths(env)
     apps  = load_apps(env)
 
-    read_input(line, ServerIO)
+    read_input(line, Process.group_leader)
 
     purge_modules(loaded)
     purge_paths(paths)
@@ -43,20 +43,20 @@ defmodule Alchemist.Server do
     loop(loaded, env)
   end
 
-  def read_input(line, io_module) do
+  def read_input(line, device) do
     case line |> String.split(" ", parts: 2) do
       ["COMP", args] ->
-        API.Comp.request(args, io_module)
+        API.Comp.request(args, device)
       ["DOCL", args] ->
-        API.Docl.request(args, io_module)
+        API.Docl.request(args, device)
       ["INFO", args] ->
-        API.Info.request(args, io_module)
+        API.Info.request(args, device)
       ["EVAL", args] ->
-        API.Eval.request(args, io_module)
+        API.Eval.request(args, device)
       ["DEFL", args] ->
-        API.Defl.request(args, io_module)
+        API.Defl.request(args, device)
       ["PING"] ->
-        API.Ping.request(io_module)
+        API.Ping.request(device)
       _ ->
         nil
     end

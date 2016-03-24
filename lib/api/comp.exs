@@ -6,22 +6,22 @@ defmodule Alchemist.API.Comp do
 
   alias Alchemist.Helpers.Complete
 
-  def request(args, io_module) do
+  def request(args, device) do
     args
     |> normalize
-    |> process(io_module)
+    |> process(device)
   end
 
-  def process([nil, _, imports, _], io_module) do
+  def process([nil, _, imports, _], device) do
     Complete.run('', imports) ++ Complete.run('')
-    |> print(io_module)
+    |> print(device)
   end
 
-  def process([hint, _context, imports, aliases], io_module) do
+  def process([hint, _context, imports, aliases], device) do
     Application.put_env(:"alchemist.el", :aliases, aliases)
 
     Complete.run(hint, imports) ++ Complete.run(hint)
-    |> print(io_module)
+    |> print(device)
   end
 
   defp normalize(request) do
@@ -31,11 +31,11 @@ defmodule Alchemist.API.Comp do
     [hint, context, imports, aliases]
   end
 
-  defp print(result, io_module) do
+  defp print(result, device) do
     result
     |> Enum.uniq
-    |> Enum.map(&io_module.puts/1)
+    |> Enum.map(&IO.puts(device, &1))
 
-    io_module.puts "END-OF-COMP"
+    IO.puts device, "END-OF-COMP"
   end
 end

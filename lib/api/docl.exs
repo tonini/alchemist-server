@@ -8,14 +8,14 @@ defmodule Alchemist.API.Docl do
 
   alias Alchemist.Helpers.ModuleInfo
 
-  def request(args, io_module) do
+  def request(args, device) do
     Application.put_env(:iex, :colors, [enabled: true])
 
     args
     |> normalize
     |> process
 
-    io_module.puts "END, func_puts-OF-DOCL"
+    IO.puts device, "END, func_puts-OF-DOCL"
   end
 
   def process([expr, modules, aliases]) do

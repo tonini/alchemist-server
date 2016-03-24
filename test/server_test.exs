@@ -1,11 +1,9 @@
 Code.require_file "test_helper.exs", __DIR__
 Code.require_file "../lib/server.exs", __DIR__
-Code.require_file "../lib/server/io.exs", __DIR__
 
 defmodule ServerTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
-  alias Alchemist.Server.IO, as: ServerIO
 
   setup_all do
     on_exit fn ->
@@ -122,7 +120,7 @@ defmodule ServerTest do
 
   defp send_signal(signal) do
     capture_io(fn ->
-      Alchemist.Server.read_input(signal, ServerIO)
+      Alchemist.Server.read_input(signal, Process.group_leader)
     end)
   end
 end

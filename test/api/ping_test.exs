@@ -1,6 +1,5 @@
 Code.require_file "../test_helper.exs", __DIR__
 Code.require_file "../../lib/api/ping.exs", __DIR__
-Code.require_file "../../lib/server/io.exs", __DIR__
 
 defmodule Alchemist.API.PingTest do
 
@@ -8,11 +7,10 @@ defmodule Alchemist.API.PingTest do
   import ExUnit.CaptureIO
 
   alias Alchemist.API.Ping
-  alias Alchemist.Server.IO, as: ServerIO
 
   test "PING request" do
     assert capture_io(fn ->
-      Ping.process(ServerIO)
+      Ping.process(Process.group_leader)
     end) =~ """
     PONG
     END-OF-PING
