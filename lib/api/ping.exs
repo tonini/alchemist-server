@@ -2,12 +2,12 @@ defmodule Alchemist.API.Ping do
 
   @moduledoc false
 
-  def request do
-    process
+  def request(io_module) do
+    process(io_module)
   end
 
-  def process do
-    IO.puts "PONG"
-    IO.puts "END-OF-PING"
+  def process(io_module) do
+    io_module.puts "PONG"
+    io_module.puts "END-OF-PING"
   end
 end

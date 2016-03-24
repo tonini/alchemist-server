@@ -56,7 +56,7 @@ defmodule Alchemist.Server do
       ["DEFL", args] ->
         API.Defl.request(args, io_module)
       ["PING"] ->
-        API.Ping.request()
+        API.Ping.request(io_module)
       _ ->
         nil
     end
