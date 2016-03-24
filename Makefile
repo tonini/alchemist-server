@@ -26,6 +26,7 @@ test_api:
 	$(ELIXIR) test/api/docl_test.exs
 	$(ELIXIR) test/api/comp_test.exs
 	$(ELIXIR) test/api/defl_test.exs
+	$(ELIXIR) test/api/ping_test.exs
 
 api_completer:
 	@ echo "\n$(INFO_COLOR)Run api tests: $(NO_COLOR)\n"

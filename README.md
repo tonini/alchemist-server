@@ -137,6 +137,14 @@ INFO { :type, :types, 'Enum.t' }
 INFO { :type, :types, 'Agent.on_start/0' }
 ```
 
+## Debugging
+
+Return PONG as response, it can be used for purpose of debugging and checking server's availability.
+
+```
+PING
+```
+
 ## End Markers
 
 Each request type ends with a specific end marker tag to notify that the request is done.
