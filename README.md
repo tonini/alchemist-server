@@ -41,7 +41,7 @@ COMP { "def", [ context: Elixir, imports: [Enum], aliases: [{MyList, List}] ] }
 ```
 $ cd elixir_project
 $ elixir path/to/alchemist-server/run.exs --env=dev --listen
-ok|locahost:55580
+ok|localhost:55580
 ```
 In this mode, when a client connects to the port, it
 responds by sending information back to the opened connection

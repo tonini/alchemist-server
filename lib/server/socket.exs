@@ -24,7 +24,7 @@ defmodule Alchemist.Server.Socket do
     {:ok, socket} = :gen_tcp.listen(port,
                     [:binary, packet: :line, active: false, reuseaddr: true])
     {:ok, port} = :inet.port(socket)
-    IO.puts "ok|locahost:#{port}"
+    IO.puts "ok|localhost:#{port}"
     loop_acceptor(socket, env)
   end
 
