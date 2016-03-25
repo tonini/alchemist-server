@@ -1,7 +1,6 @@
 Code.require_file "../helpers/process_commands.exs", __DIR__
 
 defmodule Alchemist.Server.Socket do
-  use Application
 
   alias Alchemist.Helpers.ProcessCommands
 
