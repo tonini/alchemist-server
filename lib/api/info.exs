@@ -1,5 +1,6 @@
 Code.require_file "../helpers/module_info.exs", __DIR__
 Code.require_file "../helpers/complete.exs", __DIR__
+Code.require_file "../helpers/capture_io.exs", __DIR__
 
 defmodule Alchemist.API.Info do
 
@@ -9,6 +10,7 @@ defmodule Alchemist.API.Info do
 
   alias Alchemist.Helpers.ModuleInfo
   alias Alchemist.Helpers.Complete
+  alias Alchemist.Helpers.CaptureIO
 
   def request(args, device) do
     args
@@ -46,7 +48,10 @@ defmodule Alchemist.API.Info do
 
   def process({:info, arg}, device) do
     try do
-      Code.eval_string("i(#{arg})", [], __ENV__)
+      info = CaptureIO.capture_io(fn ->
+        Code.eval_string("i(#{arg})", [], __ENV__)
+      end)
+      IO.write device, info
     rescue
       _e -> nil
     end
@@ -56,7 +61,11 @@ defmodule Alchemist.API.Info do
 
   def process({:types, arg}, device) do
     try do
-      Code.eval_string("t(#{arg})", [], __ENV__)
+      type = CaptureIO.capture_io(fn ->
+        Code.eval_string("t(#{arg})", [], __ENV__)
+      end)
+
+      IO.write device, type
     rescue
       _e -> nil
     end
