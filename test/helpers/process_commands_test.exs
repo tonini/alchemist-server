@@ -1,5 +1,5 @@
-Code.require_file "test_helper.exs", __DIR__
-Code.require_file "../lib/server.exs", __DIR__
+Code.require_file "../test_helper.exs", __DIR__
+Code.require_file "../../lib/helpers/process_commands.exs", __DIR__
 
 defmodule ServerTest do
   use ExUnit.Case
@@ -7,10 +7,10 @@ defmodule ServerTest do
 
   setup_all do
     on_exit fn ->
-      {_status, files} = File.ls Path.expand("fixtures", __DIR__)
+      {_status, files} = File.ls Path.expand("../fixtures", __DIR__)
       files |> Enum.each(fn(file) ->
         unless file == ".gitkeep" do
-          File.rm Path.expand("fixtures/#{file}", __DIR__)
+          File.rm Path.expand("../fixtures/#{file}", __DIR__)
         end
       end)
     end
@@ -33,13 +33,13 @@ defmodule ServerTest do
   end
 
   test "Evaluate the content of a file" do
-    filename = Path.expand("fixtures/eval_fixture.exs", __DIR__)
+    filename = Path.expand("../fixtures/eval_fixture.exs", __DIR__)
     File.write(filename, "1+1")
     assert send_signal("EVAL { :eval, '#{filename}' }") =~ "2"
   end
 
   test "Evaluate and quote the content of a file" do
-    filename = Path.expand("fixtures/eval_and_quote_fixture.exs", __DIR__)
+    filename = Path.expand("../fixtures/eval_and_quote_fixture.exs", __DIR__)
     File.write(filename, "[4,2,1,3] |> Enum.sort")
     assert send_signal("EVAL { :quote, '#{filename}' }") =~ """
     {{:., [line: 1], [{:__aliases__, [counter: 0, line: 1], [:Enum]}, :sort]},\n   [line: 1], []}]}
@@ -47,7 +47,7 @@ defmodule ServerTest do
   end
 
   test "Expand macro once" do
-    filename = Path.expand("fixtures/macro_expand_once_fixture.exs", __DIR__)
+    filename = Path.expand("../fixtures/macro_expand_once_fixture.exs", __DIR__)
     File.write(filename, "unless true, do: IO.puts \"this should never be printed\"")
     assert send_signal("EVAL { :expand_once, '#{filename}' }") =~ """
     if(true) do
@@ -59,7 +59,7 @@ defmodule ServerTest do
   end
 
   test "Expand macro" do
-    filename = Path.expand("fixtures/macro_expand_fixture.exs", __DIR__)
+    filename = Path.expand("../fixtures/macro_expand_fixture.exs", __DIR__)
     File.write(filename, "unless true, do: IO.puts \"this should never be printed\"")
     assert send_signal("EVAL { :expand, '#{filename}' }") =~ """
     case(true) do
@@ -120,7 +120,7 @@ defmodule ServerTest do
 
   defp send_signal(signal) do
     capture_io(fn ->
-      Alchemist.Server.read_input(signal, Process.group_leader)
+      Alchemist.Helpers.ProcessCommands.process(signal, "env", Process.group_leader)
     end)
   end
 end

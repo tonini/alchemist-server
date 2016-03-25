@@ -21,7 +21,7 @@ The server needs to be started inside an Elixir mix project like below:
 
 ```
 $ cd elixir_project
-$ elixir path/to/alchemist-server/run.exs dev
+$ elixir path/to/alchemist-server/run.exs --env=dev
 ```
 
 The Alchemist-Server API is `STDIN/STDOUT` based, when input sent to a
