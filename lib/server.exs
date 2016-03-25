@@ -1,4 +1,5 @@
 Code.require_file "server/io.exs", __DIR__
+Code.require_file "server/socket.exs", __DIR__
 
 defmodule Alchemist.Server do
 
@@ -17,11 +18,15 @@ defmodule Alchemist.Server do
   """
 
   alias Alchemist.Server.IO, as: ServerIO
+  alias Alchemist.Server.Socket, as: ServerSocket
 
   def start([args]) do
     {opts, _, _} = OptionParser.parse(args)
     env = Keyword.get(opts, :env, "dev")
-    ServerIO.start(env)
+    case Keyword.get(opts, :listen, false) do
+      false -> ServerIO.start(env)
+      true -> ServerSocket.start(nil, [env: env])
+    end
     :timer.sleep :infinity
   end
 end

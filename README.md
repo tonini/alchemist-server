@@ -17,15 +17,15 @@ Elixir Mix project and serves with informations as the following:
 
 # Usage
 
-The server needs to be started inside an Elixir mix project like below:
+The server needs to be started inside an Elixir mix project, it can be started in two ways:
 
+## Read/Write through `STDIN/STDOUT`
 ```
 $ cd elixir_project
 $ elixir path/to/alchemist-server/run.exs --env=dev
 ```
-
-The Alchemist-Server API is `STDIN/STDOUT` based, when input sent to a
-running server process it responds by sending information back to the `STDOUT`.
+In this mode, when input sent to a running server process it
+responds by sending information back to the `STDOUT`.
 
 A request consisting of two parts, the request type and the request arguments.
 
@@ -34,6 +34,25 @@ Example for a completion request:
 ```
 [type]   [arguments]
 
+COMP { "def", [ context: Elixir, imports: [Enum], aliases: [{MyList, List}] ] }
+```
+
+## Read/Write commands through network socket
+```
+$ cd elixir_project
+$ elixir path/to/alchemist-server/run.exs --env=dev --listen
+ok|locahost:55580
+```
+In this mode, when a client connects to the port, it
+responds by sending information back to the opened connection
+
+Example for a completion request:
+
+```
+$ telnet localhost 55590
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
 COMP { "def", [ context: Elixir, imports: [Enum], aliases: [{MyList, List}] ] }
 ```
 
