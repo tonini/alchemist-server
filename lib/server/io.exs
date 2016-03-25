@@ -8,7 +8,8 @@ defmodule Alchemist.Server.IO do
 
   alias Alchemist.Helpers.ProcessCommands
 
-  def start(env) do
+  def start(opts) do
+    env = Keyword.get(opts, :env)
     GenServer.start_link(__MODULE__,  env, [])
   end
 

@@ -24,8 +24,8 @@ defmodule Alchemist.Server do
     {opts, _, _} = OptionParser.parse(args)
     env = Keyword.get(opts, :env, "dev")
     case Keyword.get(opts, :listen, false) do
-      false -> ServerIO.start(env)
-      true -> ServerSocket.start(nil, [env: env])
+      false -> ServerIO.start([env: env])
+      true -> ServerSocket.start([env: env])
     end
     :timer.sleep :infinity
   end

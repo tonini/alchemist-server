@@ -7,7 +7,7 @@ defmodule Alchemist.Server.SocketTest do
   alias Alchemist.Server.Socket, as: ServerSocket
 
   setup do
-    ServerSocket.start(nil, [env: "dev", port: 55293])
+    ServerSocket.start([env: "dev", port: 55293])
     :ok
   end
 

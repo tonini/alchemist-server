@@ -4,7 +4,7 @@ defmodule Alchemist.Server.Socket do
 
   alias Alchemist.Helpers.ProcessCommands
 
-  def start(_type, opts) do
+  def start(opts) do
     import Supervisor.Spec
 
     env = Keyword.get(opts, :env)
