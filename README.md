@@ -37,7 +37,7 @@ Example for a completion request:
 COMP { "def", [ context: Elixir, imports: [Enum], aliases: [{MyList, List}] ] }
 ```
 
-## Read/Write commands through network socket
+## Read/Write through network socket
 ```
 $ cd elixir_project
 $ elixir path/to/alchemist-server/run.exs --env=dev --listen
@@ -49,7 +49,7 @@ responds by sending information back to the opened connection
 Example for a completion request:
 
 ```
-$ telnet localhost 55590
+$ telnet localhost 55580
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.
