@@ -11,7 +11,7 @@ defmodule Alchemist.API.DoclTest do
 
   test "DOCL request" do
     assert capture_io(fn ->
-      Docl.process(['defmodule', [], []])
+      Docl.process(['defmodule', [], []], Process.group_leader)
     end) =~ """
     Defines a module given by name with the given contents.
     """
@@ -19,7 +19,7 @@ defmodule Alchemist.API.DoclTest do
 
   test "DOCL request for List.flatten" do
     assert capture_io(fn ->
-      Docl.process(["List.flatten", [], []])
+      Docl.process(["List.flatten", [], []], Process.group_leader)
     end) =~ """
     Flattens the given \e[36mlist\e[0m of nested lists.
     \e[0m
@@ -31,7 +31,7 @@ defmodule Alchemist.API.DoclTest do
 
   test "DOCL request for MyCustomList.flatten with alias" do
     assert capture_io(fn ->
-      Docl.process(["MyCustomList.flatten", [], [{MyCustomList, List}]])
+      Docl.process(["MyCustomList.flatten", [], [{MyCustomList, List}]], Process.group_leader)
     end) =~ """
     Flattens the given \e[36mlist\e[0m of nested lists.
     \e[0m
@@ -43,7 +43,7 @@ defmodule Alchemist.API.DoclTest do
 
   test "DOCL request for search create_file with import" do
     assert capture_io(fn ->
-      Docl.process(["create_file", [Mix.Generator], []])
+      Docl.process(["create_file", [Mix.Generator], []], Process.group_leader)
     end) =~ """
     def create_file(path, contents, opts \\\\ [])                   \e[0m
     \e[0m
@@ -55,7 +55,7 @@ defmodule Alchemist.API.DoclTest do
 
   test "DOCL request for defmacro" do
     assert capture_io(fn ->
-      Docl.process(["defmacro", [], []])
+      Docl.process(["defmacro", [], []], Process.group_leader)
     end) =~ """
     \e[7m\e[33m                      defmacro defmacro(call, expr \\\\ nil)                      \e[0m
     """
@@ -63,7 +63,7 @@ defmodule Alchemist.API.DoclTest do
 
   test "DOCL request for Path.basename/1" do
     assert capture_io(fn ->
-      Docl.process(["Path.basename/1", [], []])
+      Docl.process(["Path.basename/1", [], []], Process.group_leader)
     end) =~ """
     Returns the last component of the path or the path itself if it does not
     contain any directory separators.

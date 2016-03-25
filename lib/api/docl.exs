@@ -1,4 +1,5 @@
 Code.require_file "../helpers/module_info.exs", __DIR__
+Code.require_file "../helpers/capture_io.exs", __DIR__
 
 defmodule Alchemist.API.Docl do
 
@@ -7,53 +8,57 @@ defmodule Alchemist.API.Docl do
   import IEx.Helpers, warn: false
 
   alias Alchemist.Helpers.ModuleInfo
+  alias Alchemist.Helpers.CaptureIO
 
   def request(args, device) do
     Application.put_env(:iex, :colors, [enabled: true])
 
     args
     |> normalize
-    |> process
+    |> process(device)
 
     IO.puts device, "END, func_puts-OF-DOCL"
   end
 
-  def process([expr, modules, aliases]) do
-    search(expr, modules, aliases)
+  def process([expr, modules, aliases], device) do
+    search(expr, modules, aliases, device)
   end
 
-  def search(nil), do: true
-  def search(expr) do
+  def search(nil, _device), do: true
+  def search(expr, device) do
     try do
-      Code.eval_string("h(#{expr})", [], __ENV__)
+      help = CaptureIO.capture_io(fn ->
+        Code.eval_string("h(#{expr})", [], __ENV__)
+      end)
+      IO.write device, help
     rescue
       _e -> nil
     end
   end
 
-  def search(expr, modules, []) do
+  def search(expr, modules, [], device) do
     expr = to_string expr
     unless function?(expr) do
-      search(expr)
+      search(expr, device)
     else
-      search_with_context(modules, expr)
+      search_with_context(modules, expr, device)
     end
   end
 
-  def search(expr, modules, aliases) do
+  def search(expr, modules, aliases, device) do
     unless function?(expr) do
       String.split(expr, ".")
       |> ModuleInfo.expand_alias(aliases)
-      |> search
+      |> search(device)
     else
-      search_with_context(modules, expr)
+      search_with_context(modules, expr, device)
     end
   end
 
-  defp search_with_context(modules, expr) do
+  defp search_with_context(modules, expr, device) do
     modules ++ [Kernel, Kernel.SpecialForms]
     |> build_search(expr)
-    |> search
+    |> search(device)
   end
 
   defp build_search(modules, search) do
