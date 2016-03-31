@@ -9,6 +9,16 @@ defmodule Alchemist.API.DoclTest do
 
   alias Alchemist.API.Docl
 
+  test "DOCL full request" do
+    docl_resp = capture_io(fn ->
+      Docl.request(~s({ "defmodule", [ context: Elixir, imports: [], aliases: [] ] }), Process.group_leader)
+    end)
+   assert docl_resp =~ """
+   Defines a module given by name with the given contents.
+   """
+   assert docl_resp =~ ~r"END-OF-DOCL$"
+  end
+
   test "DOCL request" do
     assert capture_io(fn ->
       Docl.process(['defmodule', [], []], Process.group_leader)
