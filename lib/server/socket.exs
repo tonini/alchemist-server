@@ -15,7 +15,7 @@ defmodule Alchemist.Server.Socket do
       worker(Task, [__MODULE__, :accept, [env, port]])
     ]
 
-    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    opts = [strategy: :one_for_one, name: Alchemist.Server.Socket.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
