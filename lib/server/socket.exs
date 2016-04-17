@@ -42,10 +42,8 @@ defmodule Alchemist.Server.Socket do
 
         data
         |> String.strip
-        |> ProcessCommands.process(env, io_string)
-
-        {:ok, {_, output}} = StringIO.close(io_string)
-        write_line(output, socket)
+        |> ProcessCommands.process(env)
+        |> write_line(socket)
 
         serve(socket, env)
     end
