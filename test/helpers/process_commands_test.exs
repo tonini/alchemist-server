@@ -81,11 +81,6 @@ defmodule ServerTest do
 
   test "Get all available mix tasks by name" do
     assert send_signal("INFO { :type, :mixtasks }") =~ """
-    app.start
-    archive
-    archive.build
-    archive.install
-    archive.uninstall
     clean
     cmd
     compile
