@@ -21,13 +21,13 @@ defmodule Alchemist.Server do
   alias Alchemist.Server.Socket, as: ServerSocket
 
   def start([args]) do
-    {opts, _, _} = OptionParser.parse(args)
+    {opts, _, _} = OptionParser.parse(args, switches: [port: :integer])
     env = Keyword.get(opts, :env, "dev")
     noansi = Keyword.get(opts, :no_ansi, false)
     Application.put_env(:iex, :colors, [enabled: !noansi])
     case Keyword.get(opts, :listen, false) do
       false -> ServerIO.start([env: env])
-      true -> ServerSocket.start([env: env])
+      true -> ServerSocket.start(opts)
     end
     :timer.sleep :infinity
   end

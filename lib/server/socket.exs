@@ -8,7 +8,7 @@ defmodule Alchemist.Server.Socket do
     import Supervisor.Spec
 
     env = Keyword.get(opts, :env)
-    port = Keyword.get(opts, :port, 0)
+    port = Keyword.get(opts, :port, 53000)
 
     children = [
       supervisor(Task.Supervisor, [[name: Alchemist.Server.Socket.TaskSupervisor]]),
