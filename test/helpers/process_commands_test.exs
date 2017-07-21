@@ -87,6 +87,12 @@ defmodule ServerTest do
     """
   end
 
+  test "Raises on unexpected" do
+    assert_raise RuntimeError, "Encountered unexpected input", fn ->
+      send_signal("BLAHBLAH")
+    end
+  end
+
   # The IEx.Helpers.t and IEx.Helpers.i are functionality which come with
   # Elixir version 1.2.0
   if Version.match?(System.version, ">=1.2.0-rc") do

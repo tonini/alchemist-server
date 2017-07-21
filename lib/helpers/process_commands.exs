@@ -42,7 +42,7 @@ defmodule Alchemist.Helpers.ProcessCommands do
       ["VERSION"] ->
         API.Version.request()
       _ ->
-        nil
+        raise "Encountered unexpected input"
     end
   end
 
