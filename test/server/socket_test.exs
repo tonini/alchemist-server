@@ -7,13 +7,12 @@ defmodule Alchemist.Server.SocketTest do
   alias Alchemist.Server.Socket, as: ServerSocket
 
   setup do
-    ServerSocket.start([env: "dev", port: 55293])
-    :ok
-  end
-
-  setup do
+    sock_id = :erlang.system_time()
+    {:ok, server_pid} = ServerSocket.start([env: "dev", socket_file: "/tmp/alchemist-server-#{sock_id}.sock"])
+    Process.sleep(100)
+    socket_file = String.to_charlist("/tmp/alchemist-server-#{sock_id}.sock")
     opts = [:binary, packet: :line, active: false]
-    {:ok, socket} = :gen_tcp.connect('localhost', 55293, opts)
+    {:ok, socket} = :gen_tcp.connect({:local, socket_file}, 0, opts)
     {:ok, socket: socket}
   end
 
