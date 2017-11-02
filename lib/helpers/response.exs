@@ -11,7 +11,7 @@ defmodule Alchemist.Helpers.Response do
   end
 
   def endmark(response, cmd) do
-    response = String.strip(response)
+    response = String.trim(response)
     "#{response}\nEND-OF-#{cmd}\n"
   end
 end

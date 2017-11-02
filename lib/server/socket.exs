@@ -43,7 +43,7 @@ defmodule Alchemist.Server.Socket do
       data when is_binary(data) ->
 
         data
-        |> String.strip
+        |> String.trim
         |> ProcessCommands.process(env)
         |> write_line(socket)
 
